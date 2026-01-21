@@ -32,25 +32,4 @@ async function copyToClipboard(text) {
 }
 
 // Add click event to copy buttons (if any, though not in HTML now)
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('copy-btn')) {
-        copyToClipboard(e.target.dataset.number || '6285173360622');
-    }
-});
-
-// Simple fade-in animation on load
-window.addEventListener('load', () => {
-    paymentCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 100 * index);
-    });
-});
-
-// Initial styles for animation
-paymentCards.forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-});
+document.addEventListener('
