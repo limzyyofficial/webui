@@ -16,9 +16,24 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav"> <!-- Ganti dengan URL musik Anda -->
+        Your browser does not support the audio element.
+    </audio>
+
     <main class="container">
         <header class="header">
             <h1>Menu Apk Premium</h1>
+            <button class="music-btn" id="music-btn">
+                <i class="fas fa-play"></i>
+            </button>
         </header>
         
         <section class="warning">
