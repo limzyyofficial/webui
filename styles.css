@@ -25,27 +25,78 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px; /* Kurangi padding untuk layar vertikal */
+    padding: 10px;
     line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--text-secondary);
+    border-top: 4px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-screen p {
+    font-size: 1.2rem;
+    color: var(--text-primary);
 }
 
 .container {
-    max-width: 100%; /* Full width untuk mobile */
+    max-width: 100%;
     width: 100%;
     background: var(--bg-secondary);
-    border-radius: 15px; /* Kurangi radius untuk mobile */
-    padding: 20px; /* Kurangi padding */
+    border-radius: 15px;
+    padding: 20px;
     box-shadow: var(--shadow);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.container.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .header {
     text-align: center;
-    margin-bottom: 20px; /* Kurangi margin */
+    margin-bottom: 20px;
+    position: relative;
 }
 
 .header h1 {
-    font-size: 2rem; /* Lebih kecil untuk mobile */
+    font-size: 2rem;
     font-weight: 700;
     background: linear-gradient(90deg, var(--accent), #ffffff);
     -webkit-background-clip: text;
@@ -53,56 +104,82 @@ body {
     background-clip: text;
 }
 
+.music-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--bg-primary);
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow);
+}
+
+.music-btn.playing i:before {
+    content: "\f04c"; /* Pause icon */
+}
+
 .warning {
     background: linear-gradient(90deg, var(--danger), #ff6b6b);
     color: var(--text-primary);
-    padding: 12px 20px; /* Kurangi padding */
-    border-radius: 12px; /* Kurangi radius */
+    padding: 12px 20px;
+    border-radius: 12px;
     text-align: center;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 25px; /* Kurangi margin */
+    margin-bottom: 25px;
     box-shadow: var(--shadow);
-    font-size: 0.9rem; /* Lebih kecil */
+    font-size: 0.9rem;
 }
 
 .payment-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Selalu satu kolom untuk mobile */
-    gap: 15px; /* Kurangi gap */
-    margin-bottom: 25px; /* Kurangi margin */
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
 .payment-card {
     background: var(--bg-card);
-    border-radius: 12px; /* Kurangi radius */
-    padding: 20px; /* Kurangi padding */
+    border-radius: 12px;
+    padding: 20px;
     box-shadow: var(--shadow);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Kurangi gap */
+    gap: 12px;
 }
 
 .payment-card:hover {
-    transform: translateY(-3px); /* Kurangi efek hover untuk mobile */
+    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    gap: 12px; /* Kurangi gap */
+    gap: 12px;
 }
 
 .card-icon {
-    width: 45px; /* Lebih kecil */
-    height: 45px; /* Lebih kecil */
-    border-radius: 8px; /* Kurangi radius */
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
     background: #ffffff;
     display: flex;
     align-items: center;
@@ -123,21 +200,21 @@ body {
 }
 
 .card-header h3 {
-    font-size: 1.2rem; /* Lebih kecil */
+    font-size: 1.2rem;
     font-weight: 600;
 }
 
 .card-details p {
     color: var(--text-secondary);
-    font-size: 0.95rem; /* Lebih kecil */
+    font-size: 0.95rem;
     margin: 4px 0;
 }
 
 .status {
     align-self: flex-start;
-    padding: 4px 12px; /* Kurangi padding */
-    border-radius: 15px; /* Kurangi radius */
-    font-size: 0.8rem; /* Lebih kecil */
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
 }
@@ -156,8 +233,8 @@ body {
     background: linear-gradient(90deg, var(--accent), #0099cc);
     color: var(--text-primary);
     text-decoration: none;
-    padding: 10px 18px; /* Kurangi padding */
-    border-radius: 20px; /* Kurangi radius */
+    padding: 10px 18px;
+    border-radius: 20px;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -165,55 +242,55 @@ body {
     gap: 6px;
     transition: var(--transition);
     text-transform: uppercase;
-    font-size: 0.85rem; /* Lebih kecil */
+    font-size: 0.85rem;
 }
 
 .btn-order:hover {
-    transform: translateY(-1px); /* Kurangi efek hover */
+    transform: translateY(-1px);
     box-shadow: var(--shadow);
 }
 
 .contact {
     text-align: center;
     background: rgba(255, 255, 255, 0.05);
-    padding: 20px; /* Kurangi padding */
-    border-radius: 12px; /* Kurangi radius */
+    padding: 20px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact h2 {
-    font-size: 1.3rem; /* Lebih kecil */
-    margin-bottom: 15px; /* Kurangi margin */
+    font-size: 1.3rem;
+    margin-bottom: 15px;
 }
 
 .btn-contact {
     background: linear-gradient(90deg, #5865f2, #7289da);
     color: var(--text-primary);
     text-decoration: none;
-    padding: 12px 25px; /* Kurangi padding */
-    border-radius: 20px; /* Kurangi radius */
+    padding: 12px 25px;
+    border-radius: 20px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     transition: var(--transition);
     text-transform: uppercase;
-    font-size: 0.9rem; /* Lebih kecil */
+    font-size: 0.9rem;
 }
 
 .btn-contact:hover {
-    transform: translateY(-1px); /* Kurangi efek hover */
+    transform: translateY(-1px);
     box-shadow: var(--shadow);
 }
 
 .toast {
     position: fixed;
-    top: 15px; /* Sesuaikan posisi untuk mobile */
-    right: 15px; /* Sesuaikan posisi untuk mobile */
+    top: 15px;
+    right: 15px;
     background: var(--bg-card);
     color: var(--text-primary);
-    padding: 12px 20px; /* Kurangi padding */
-    border-radius: 12px; /* Kurangi radius */
+    padding: 12px 20px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -221,7 +298,7 @@ body {
     transition: var(--transition);
     box-shadow: var(--shadow);
     z-index: 1000;
-    font-size: 0.9rem; /* Lebih kecil */
+    font-size: 0.9rem;
 }
 
 .toast.show {
@@ -231,51 +308,51 @@ body {
 /* Media Query untuk rasio 9:16 (portrait) dan ukuran ponsel */
 @media (max-width: 768px) and (orientation: portrait) {
     body {
-        padding: 5px; /* Minimal padding untuk layar vertikal */
+        padding: 5px;
     }
     .container {
-        padding: 15px; /* Lebih kecil untuk 9:16 */
-        border-radius: 10px; /* Lebih kecil */
+        padding: 15px;
+        border-radius: 10px;
     }
     .header h1 {
-        font-size: 1.8rem; /* Lebih kecil untuk 9:16 */
+        font-size: 1.8rem;
     }
     .warning {
-        padding: 10px 15px; /* Lebih kecil */
-        font-size: 0.85rem; /* Lebih kecil */
+        padding: 10px 15px;
+        font-size: 0.85rem;
     }
     .payment-card {
-        padding: 15px; /* Lebih kecil */
+        padding: 15px;
     }
     .card-icon {
-        width: 40px; /* Lebih kecil */
-        height: 40px; /* Lebih kecil */
+        width: 40px;
+        height: 40px;
     }
     .card-header h3 {
-        font-size: 1.1rem; /* Lebih kecil */
+        font-size: 1.1rem;
     }
     .card-details p {
-        font-size: 0.9rem; /* Lebih kecil */
+        font-size: 0.9rem;
     }
     .btn-order, .btn-contact {
-        padding: 10px 15px; /* Lebih kecil */
-        font-size: 0.8rem; /* Lebih kecil */
+        padding: 10px 15px;
+        font-size: 0.8rem;
     }
     .contact h2 {
-        font-size: 1.2rem; /* Lebih kecil */
+        font-size: 1.2rem;
     }
 }
 
 /* Media Query umum untuk mobile */
 @media (max-width: 480px) {
     .header h1 {
-        font-size: 1.6rem; /* Lebih kecil untuk layar kecil */
+        font-size: 1.6rem;
     }
     .warning {
-        font-size: 0.8rem; /* Lebih kecil */
+        font-size: 0.8rem;
     }
     .card-header {
-        flex-direction: column; /* Stack vertikal untuk ikon dan teks */
+        flex-direction: column;
         text-align: center;
     }
 }
